@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace WebApp.Server.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/auth/[action]")]
     [ApiController]
-    public class AuthorizeController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AuthorizeController(
+        public AuthenticationController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
@@ -66,7 +66,7 @@ namespace WebApp.Server.Controllers
 
         [HttpGet]
         [Authorize]
-        public UserInfo UserInfo()
+        public UserInfoModel UserInfo()
         {
             //var user = await userManager.GetUserAsync(HttpContext.User);
             return new()

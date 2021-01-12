@@ -2,7 +2,7 @@
 
 namespace WebApp.Shared
 {
-    public class UserInfo
+    public class UserInfoModel
     {
         public bool IsAuthenticated { get; set; }
         public string UserName { get; set; }
