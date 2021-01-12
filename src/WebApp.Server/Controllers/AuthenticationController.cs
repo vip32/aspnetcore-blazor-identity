@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace WebApp.Server.Controllers
 {
@@ -47,6 +48,8 @@ namespace WebApp.Server.Controllers
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
+            await userManager.AddClaimAsync(user, new("registeredDate", DateTime.UtcNow.ToString("o")));
+
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
             return await Login(new()
