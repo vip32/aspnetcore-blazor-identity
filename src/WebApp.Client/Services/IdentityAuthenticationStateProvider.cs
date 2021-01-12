@@ -1,5 +1,4 @@
-﻿using WebApp.Client.Services.Contracts;
-using WebApp.Shared;
+﻿using WebApp.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Linq;
@@ -7,42 +6,42 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace WebApp.Client.States
+namespace WebApp.Client
 {
     public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private UserInfo _userInfoCache;
-        private readonly IAuthorizeApi _authorizeApi;
+        private UserInfo userInfoCache;
+        private readonly IAuthorizeApi authorizeApi;
 
         public IdentityAuthenticationStateProvider(IAuthorizeApi authorizeApi)
         {
-            this._authorizeApi = authorizeApi;
+            this.authorizeApi = authorizeApi;
         }
 
         public async Task Login(LoginParameters loginParameters)
         {
-            await _authorizeApi.Login(loginParameters);
+            await authorizeApi.Login(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         public async Task Register(RegisterParameters registerParameters)
         {
-            await _authorizeApi.Register(registerParameters);
+            await authorizeApi.Register(registerParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         public async Task Logout()
         {
-            await _authorizeApi.Logout();
-            _userInfoCache = null;
+            await authorizeApi.Logout();
+            userInfoCache = null;
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         private async Task<UserInfo> GetUserInfo()
         {
-            if (_userInfoCache != null && _userInfoCache.IsAuthenticated) return _userInfoCache;
-            _userInfoCache = await _authorizeApi.GetUserInfo();
-            return _userInfoCache;
+            if (userInfoCache != null && userInfoCache.IsAuthenticated) return userInfoCache;
+            userInfoCache = await authorizeApi.GetUserInfo();
+            return userInfoCache;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()

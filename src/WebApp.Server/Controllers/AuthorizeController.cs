@@ -12,24 +12,24 @@ namespace WebApp.Server.Controllers
     [ApiController]
     public class AuthorizeController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginParameters parameters)
         {
-            var user = await _userManager.FindByNameAsync(parameters.UserName);
+            var user = await userManager.FindByNameAsync(parameters.UserName);
             if (user == null) return BadRequest("User does not exist");
-            var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
+            var singInResult = await signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
             if (!singInResult.Succeeded) return BadRequest("Invalid password");
 
-            await _signInManager.SignInAsync(user, parameters.RememberMe);
+            await signInManager.SignInAsync(user, parameters.RememberMe);
 
             return Ok();
         }
@@ -40,7 +40,7 @@ namespace WebApp.Server.Controllers
         {
             var user = new ApplicationUser();
             user.UserName = parameters.UserName;
-            var result = await _userManager.CreateAsync(user, parameters.Password);
+            var result = await userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
             return await Login(new LoginParameters
@@ -54,7 +54,7 @@ namespace WebApp.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await signInManager.SignOutAsync();
             return Ok();
         }
 

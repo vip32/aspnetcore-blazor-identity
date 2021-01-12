@@ -1,7 +1,4 @@
-﻿using WebApp.Client.Services.Contracts;
-using WebApp.Client.Services.Implementations;
-using WebApp.Client.States;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;

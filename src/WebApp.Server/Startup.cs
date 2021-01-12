@@ -21,7 +21,7 @@ namespace WebApp.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-              options.UseSqlite("Filename=data.db"));
+              options.UseSqlite("Filename=data_application.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -76,8 +76,7 @@ namespace WebApp.Server
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                // auto migrate
-                serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate(); // auto migrate
             }
 
             if (env.IsDevelopment())
@@ -88,7 +87,6 @@ namespace WebApp.Server
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

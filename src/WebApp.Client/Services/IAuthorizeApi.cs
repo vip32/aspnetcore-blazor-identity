@@ -1,7 +1,7 @@
 ﻿using WebApp.Shared;
 using System.Threading.Tasks;
 
-namespace WebApp.Client.Services.Contracts
+namespace WebApp.Client
 {
     public interface IAuthorizeApi
     {
