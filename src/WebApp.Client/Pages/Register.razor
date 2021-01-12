@@ -7,21 +7,21 @@
     Blazor with Identity Sample
 </h1>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
+<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="model">
     <DataAnnotationsValidator />
     <h4 class="font-weight-normal text-center">Create Account</h4>
 
     <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerParameters.UserName" />
-    <ValidationMessage For="@(() => registerParameters.UserName)" />
+    <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@model.UserName" />
+    <ValidationMessage For="@(() => model.UserName)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerParameters.Password" />
-    <ValidationMessage For="@(() => registerParameters.Password)" />
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@model.Password" />
+    <ValidationMessage For="@(() => model.Password)" />
 
     <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
+    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@model.PasswordConfirm" />
+    <ValidationMessage For="@(() => model.PasswordConfirm)" />
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 
@@ -33,7 +33,7 @@
 
 @functions{
 
-    RegisterParameters registerParameters { get; set; } = new RegisterParameters();
+    UserRegisterModel model { get; set; } = new UserRegisterModel();
     string error { get; set; }
 
     async Task OnSubmit()
@@ -41,7 +41,7 @@
         error = null;
         try
         {
-            await authStateProvider.Register(registerParameters);
+            await authStateProvider.Register(model);
             navigationManager.NavigateTo("");
         }
         catch (Exception ex)

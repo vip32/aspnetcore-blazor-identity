@@ -15,38 +15,44 @@ namespace WebApp.Server.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthorizeController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginParameters parameters)
+        public async Task<IActionResult> Login(UserLoginModel model)
         {
-            var user = await userManager.FindByNameAsync(parameters.UserName);
+            var user = await userManager.FindByNameAsync(model.UserName);
             if (user == null) return BadRequest("User does not exist");
-            var singInResult = await signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
+
+            var singInResult = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (!singInResult.Succeeded) return BadRequest("Invalid password");
 
-            await signInManager.SignInAsync(user, parameters.RememberMe);
+            await signInManager.SignInAsync(user, model.RememberMe);
 
             return Ok();
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterParameters parameters)
+        public async Task<IActionResult> Register(UserRegisterModel model)
         {
-            var user = new ApplicationUser();
-            user.UserName = parameters.UserName;
-            var result = await userManager.CreateAsync(user, parameters.Password);
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName
+            };
+
+            var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
-            return await Login(new LoginParameters
+            return await Login(new()
             {
-                UserName = parameters.UserName,
-                Password = parameters.Password
+                UserName = model.UserName,
+                Password = model.Password
             });
         }
 
@@ -59,16 +65,11 @@ namespace WebApp.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public UserInfo UserInfo()
         {
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            return BuildUserInfo();
-        }
-
-
-        private UserInfo BuildUserInfo()
-        {
-            return new UserInfo
+            //var user = await userManager.GetUserAsync(HttpContext.User);
+            return new()
             {
                 IsAuthenticated = User.Identity.IsAuthenticated,
                 UserName = User.Identity.Name,

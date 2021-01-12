@@ -5,8 +5,8 @@ namespace WebApp.Client
 {
     public interface IAuthorizeApi
     {
-        Task Login(LoginParameters loginParameters);
-        Task Register(RegisterParameters registerParameters);
+        Task Login(UserLoginModel loginParameters);
+        Task Register(UserRegisterModel registerParameters);
         Task Logout();
         Task<UserInfo> GetUserInfo();
     }

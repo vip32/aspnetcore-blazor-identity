@@ -16,7 +16,7 @@ namespace WebApp.Client
             this.httpClient = httpClient;
         }
 
-        public async Task Login(LoginParameters loginParameters)
+        public async Task Login(UserLoginModel loginParameters)
         {
             //var stringContent = new StringContent(JsonSerializer.Serialize(loginParameters), Encoding.UTF8, "application/json");
             var result = await httpClient.PostAsJsonAsync("api/Authorize/Login", loginParameters);
@@ -30,7 +30,7 @@ namespace WebApp.Client
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task Register(RegisterParameters registerParameters)
+        public async Task Register(UserRegisterModel registerParameters)
         {
             //var stringContent = new StringContent(JsonSerializer.Serialize(registerParameters), Encoding.UTF8, "application/json");
             var result = await httpClient.PostAsJsonAsync("api/Authorize/Register", registerParameters);

@@ -7,20 +7,20 @@
     Blazor with AspNetCore Identity Sample
 </h3>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginParameters">
+<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="model">
     <DataAnnotationsValidator />
     <h4 class="font-weight-normal text-center">Login</h4>
 
     <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" @bind-Value="loginParameters.UserName" autofocus placeholder="Username" />
-    <ValidationMessage For="@(() => loginParameters.UserName)" />
+    <InputText id="inputUsername" class="form-control" @bind-Value="model.UserName" autofocus placeholder="Username" />
+    <ValidationMessage For="@(() => model.UserName)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginParameters.Password" />
-    <ValidationMessage For="@(() => loginParameters.Password)" />
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="model.Password" />
+    <ValidationMessage For="@(() => model.Password)" />
 
     <div class="form-check m-3">
-        <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@loginParameters.RememberMe" />
+        <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@model.RememberMe" />
         <label class="form-check-label" for="inputRememberMe">Remember Me</label>
     </div>
 
@@ -34,7 +34,7 @@
 </EditForm>
 
 @code{
-    LoginParameters loginParameters { get; set; } = new LoginParameters();
+    UserLoginModel model { get; set; } = new UserLoginModel();
     string error { get; set; }
 
     async Task OnSubmit()
@@ -42,7 +42,7 @@
         error = null;
         try
         {
-            await authStateProvider.Login(loginParameters);
+            await authStateProvider.Login(model);
             navigationManager.NavigateTo("");
         }
         catch (Exception ex)

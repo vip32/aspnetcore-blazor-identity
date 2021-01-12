@@ -18,13 +18,13 @@ namespace WebApp.Client
             this.authorizeApi = authorizeApi;
         }
 
-        public async Task Login(LoginParameters loginParameters)
+        public async Task Login(UserLoginModel loginParameters)
         {
             await authorizeApi.Login(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-        public async Task Register(RegisterParameters registerParameters)
+        public async Task Register(UserRegisterModel registerParameters)
         {
             await authorizeApi.Register(registerParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());

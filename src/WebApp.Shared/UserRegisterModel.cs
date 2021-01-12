@@ -2,7 +2,7 @@
 
 namespace WebApp.Shared
 {
-    public class RegisterParameters
+    public class UserRegisterModel
     {
         [Required]
         public string UserName { get; set; }

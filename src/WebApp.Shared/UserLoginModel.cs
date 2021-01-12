@@ -2,7 +2,7 @@
 
 namespace WebApp.Shared
 {
-    public class LoginParameters
+    public class UserLoginModel
     {
         [Required]
         public string UserName { get; set; }
