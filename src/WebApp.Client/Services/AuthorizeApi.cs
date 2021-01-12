@@ -1,5 +1,4 @@
-﻿using WebApp.Client;
-using WebApp.Shared;
+﻿using WebApp.Shared;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
