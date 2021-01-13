@@ -9,11 +9,6 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.1" PrivateAssets="all" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NSwag.MSBuild" Version="13.9.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
@@ -21,10 +16,4 @@
     <ProjectReference Include="..\WebApp.Shared\WebApp.Shared.csproj" />
   </ItemGroup>
 
-  <Target Name="GenerateApiClientSourceCode" BeforeTargets="CoreCompile;PrepareResource">
-    <Exec Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration),Output=$(IntermediateOutputPath)\ApiClient.generated.cs" />
-    <ItemGroup>
-      <Compile Include="$(IntermediateOutputPath)\ApiClient.generated.cs" />
-    </ItemGroup>
-  </Target>
 </Project>

@@ -1,8 +1,7 @@
 ﻿@page "/fetchdata"
 @attribute [Authorize]
 @using WebApp.Shared
-@*@inject HttpClient http*@
-@inject IWeatherForecastApiClient client
+@inject HttpClient http
 
 <h1>Weather forecast</h1>
 
@@ -42,7 +41,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //forecasts = await http.GetFromJsonAsync<WeatherForecast[]>("api/WeatherForecast");
-        forecasts = await client.GetAsync
+        forecasts = await http.GetFromJsonAsync<WeatherForecast[]>("api/WeatherForecast");
     }
 }
