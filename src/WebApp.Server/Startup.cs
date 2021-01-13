@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Client.Api;
 
 namespace WebApp.Server
 {
@@ -20,6 +21,8 @@ namespace WebApp.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IWeatherForecastApiClient, WeatherForecastApiClient>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlite("Filename=data_application.db"));
 
