@@ -23,6 +23,18 @@
     <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@model.PasswordConfirm" />
     <ValidationMessage For="@(() => model.PasswordConfirm)" />
 
+    <label for="inputFirstname" class="sr-only">First Name</label>
+    <InputText id="inputFirstname" class="form-control" placeholder="Firstname" autofocus @bind-Value="@model.FirstName" />
+    <ValidationMessage For="@(() => model.FirstName)" />
+
+    <label for="inputLastname" class="sr-only">Last Name</label>
+    <InputText id="inputLastname" class="form-control" placeholder="Lastname" autofocus @bind-Value="@model.LastName" />
+    <ValidationMessage For="@(() => model.LastName)" />
+
+    <label for="inputEmail" class="sr-only">Email</label>
+    <InputText id="inputEmail" class="form-control" placeholder="Email" autofocus @bind-Value="@model.Email" />
+    <ValidationMessage For="@(() => model.Email)" />
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 
     <label class="text-danger">@error</label>

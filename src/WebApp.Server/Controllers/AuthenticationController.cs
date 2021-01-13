@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Security.Claims;
 
 namespace WebApp.Server.Controllers
 {
@@ -44,10 +45,12 @@ namespace WebApp.Server.Controllers
         {
             var user = new ApplicationUser
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                Email = model.Email
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
+            await userManager.AddClaimAsync(user, new(ClaimTypes.GivenName, $"{model.FirstName} {model.LastName}"));
             await userManager.AddClaimAsync(user, new("registeredDate", DateTime.UtcNow.ToString("o")));
 
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
